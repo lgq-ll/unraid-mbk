@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Container>
+  <Beta>False</Beta>
+  <Category>MediaServer:Video MediaServer:Music MediaServer:Photos</Category>
+  <Name>EmbyServer_Unlock</Name>
+  <Description>
+    Emby Server is a home media server built on top of other popular open source technologies such as Service Stack, jQuery, jQuery mobile, and Mono. Bringing together movies, music, television and more in one dazzling interface.[br][br]
+    [b][span style='color: #E80000;']Directories:[/span][/b][br]
+    [b]/config[/b] : this path is used to store Emby's configuration.[br]
+    [b]/mnt[/b] : this path is used to add library locations to Emby.[br][br]
+    [b]Unraid user please edit: /boot/config/go ,add[/b][br]
+    [b]Unraid 使用前请编辑: /boot/config/go ,增加[/b][br]
+    modprobe i915[br]
+    chown nobody:users /dev/dri[br]
+    chmod 0777 /dev/dri/*[br][br]
+    [b]to mount the graphics card[/b]
+    [b]来挂载显卡[/b][br]
+    [b]in addition, you need to make following changes to suit your env [/b][br]
+    [b]除此之外,你还需要根据自己的情况更改[/b][br]
+    UID[br]
+    GID[br]
+    GIDLIST[br]
+    [b]to adapt y system and get graphics card access [/b][br]
+    [b]来适配你的系统,获取显卡权限[/b][br]
+    [b]you can get the parameters, using commamd:id [/b][br][b]你可以用id命令获取这些参数[/b][br]
+    [b]默认添加了http_proxy和https_proxy代理环境变量,请根据自己的情况更改或者删除这两个变量[br]
+    [b]遇到问题请进群[/b][br]
+  </Description>
+  <Registry>https://registry.hub.docker.com/u/xinjiawei1/emby_unlockd/</Registry>
+  <Repository>xinjiawei1/emby_unlockd</Repository>
+  <BindTime>true</BindTime>
+  <Privileged>false</Privileged>
+  <Environment>
+    <Variable>
+      <Name>UID</Name>
+      <Value>0</Value>
+    </Variable>
+    <Variable>
+      <Name>GID</Name>
+      <Value>0</Value>
+    </Variable>
+    <Variable>
+      <Name>GIDLIST</Name>
+      <Value>0</Value>
+    </Variable>
+    <Variable>
+      <Value>http://10.168.1.192:10809</Value>
+      <Name>http_proxy</Name>
+    </Variable>
+    <Variable>
+      <Value>http://10.168.1.192:10809</Value>
+      <Name>https_proxy</Name>
+    </Variable>
+  </Environment>
+  <Networking>
+    <Mode>host</Mode>
+    <Publish>
+      <Port>
+        <HostPort>8096</HostPort>
+        <ContainerPort>8096</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+      <Port>
+        <HostPort>8920</HostPort>
+        <ContainerPort>8920</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/cache/appdata/emby/</HostDir>
+      <ContainerDir>/config</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+    <Volume>
+      <HostDir>/mnt</HostDir>
+      <ContainerDir>/mnt</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <WebUI>http://[IP]:[PORT:8096]/</WebUI>
+  <Banner>https://act.jiawei.xin:10086/tmp/emby/logo.png</Banner>
+  <Icon>https://act.jiawei.xin:10086/tmp/emby/logoicon.png</Icon>
+  <Config Name="graphcard" Target="" Default="" Mode="" Description="&#x5BB9;&#x5668; Device: " Type="Device" Display="always" Required="false" Mask="false">/dev/dri</Config>
+</Container>
